@@ -5,11 +5,13 @@
             :url "https://opensource.org/licenses/MIT"}
   :scm {:name "git"
         :url "https://github.com/pbalduino/clj-qldb"}
-  :source-paths ["src"]
   :deploy-repositories [["clojars" {:url "https://repo.clojars.org"}
                         ["releases" :clojars]
                         ["snapshots" :clojars]]]
-  :dependencies [[pbalduino/dandelion "0.1.0"]]
+  :dependencies [[pbalduino/dandelion "0.1.0"]
+                 [software.amazon.qldb/amazon-qldb-driver-java "1.0.1"]]
+  :source-paths ["src/clojure"]
+  :java-source-paths ["src/java"]
   :plugins [[lein-cljfmt "0.6.4"]]
   :profiles {:uberjar {:aot :all}
              :dev {:dependencies [[clj-kondo "RELEASE"]
