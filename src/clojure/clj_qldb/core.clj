@@ -1,13 +1,16 @@
 (ns clj-qldb.core
-  (:import (pbalduino.cljqldb.helper Connection)))
+  (:import (pbalduino.cljqldb.helper Connection)
+           (software.amazon.qldb PooledQldbDriver
+                                 QldbSession)))
 
-(defn create-connection [ledger-name retries]
+(defn create-driver [^String ledger-name ^Integer retries]
+  {:pre [(some? ledger-name)]}
   (Connection/createQldbDriver ledger-name retries))
 
-(defn create-session [conn]
-  (.getSession conn))
+(defn create-session [^PooledQldbDriver driver]
+  (.getSession driver))
 
-(defn get-table-names [session]
+(defn get-table-names [^QldbSession session]
   (.getTableNames session))
 
 ; create table

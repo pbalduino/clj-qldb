@@ -1,6 +1,6 @@
 (ns clj-qldb.core-test
   (:require [clojure.test :as t]
-            [clj-qldb.core :refer [create-connection
+            [clj-qldb.core :refer [create-driver
                                    create-session
                                    get-table-names]]))
 
@@ -11,7 +11,7 @@
 
   (t/testing "Connection"
     (let [ledger-name (System/getenv "QLDB_LEDGER_NAME")
-          conn (create-connection ledger-name 5)
-          session (create-session conn)
+          driver (create-driver ledger-name 5)
+          session (create-session driver)
           tables (get-table-names session)]
       (t/is (seq? (iterator-seq (.iterator tables)))))))
