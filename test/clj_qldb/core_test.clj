@@ -12,6 +12,6 @@
   (t/testing "Connection"
     (let [ledger-name (System/getenv "QLDB_LEDGER_NAME")
           driver (create-driver ledger-name 5)
-          session (create-session driver)
+          session (get-session driver)
           tables (get-table-names session)]
       (t/is (seq? tables)))))

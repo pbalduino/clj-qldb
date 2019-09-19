@@ -1,4 +1,4 @@
-(defproject pbalduino/clj-qldb "0.0.1-SNAPSHOT"
+(defproject pbalduino/clj-qldb "0.0.2-SNAPSHOT"
   :description "AWS QLDB + Clojure"
   :url "https://github.com/pbalduino/clj-qldb"
   :license {:name "MIT License"
@@ -8,7 +8,7 @@
   :deploy-repositories [["clojars" {:url "https://repo.clojars.org"}
                         ["releases" :clojars]
                         ["snapshots" :clojars]]]
-  :dependencies [[pbalduino/dandelion "0.1.0"]
+  :dependencies [[pbalduino/dandelion "0.1.1"]
                  [software.amazon.qldb/amazon-qldb-driver-java "1.0.1"]]
   :source-paths ["src/clojure"]
   :java-source-paths ["src/java"]
