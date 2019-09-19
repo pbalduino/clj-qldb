@@ -11,7 +11,10 @@
   (.getSession driver))
 
 (defn get-table-names [^QldbSession session]
-  (.getTableNames session))
+  (-> session
+      .getTableNames
+      .iterator
+      iterator-seq))
 
 ; create table
 

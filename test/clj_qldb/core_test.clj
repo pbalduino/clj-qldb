@@ -14,4 +14,4 @@
           driver (create-driver ledger-name 5)
           session (create-session driver)
           tables (get-table-names session)]
-      (t/is (seq? (iterator-seq (.iterator tables)))))))
+      (t/is (seq? tables)))))
