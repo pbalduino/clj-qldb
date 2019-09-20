@@ -49,12 +49,12 @@
 (defn drop-table [^QldbSession session ^String table]
   (execute session (format "DROP TABLE %s" table)))
 
-(defn insert [session table data]
+(defn insert [^QldbSession session ^String table ^Map data]
   (let [ion-list (ArrayList.)]
     (.add ion-list (ion/clj->ion data))
     (execute session (format "INSERT INTO %s ?" table) ion-list)))
 
-(defn select [session table & opts]
+(defn select [^QldbSession session ^String table & opts]
   (let [{:keys [fields filter]} (merge {:fields nil
                                         :filter nil}
                                        (apply hash-map opts))
@@ -62,7 +62,3 @@
         condition (if filter (str " WHERE " filter) "")
         query (format "SELECT %s FROM %s%s" field-str table condition)]
     (execute session query)))
-
-; delete
-
-; select

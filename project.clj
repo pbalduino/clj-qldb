@@ -1,5 +1,5 @@
-(defproject pbalduino/clj-qldb "0.1.0"
-  :description "AWS QLDB + Clojure"
+(defproject pbalduino/clj-qldb "0.1.1"
+  :description "A lightweight library to use AWS QLDB in Clojure"
   :url "https://github.com/pbalduino/clj-qldb"
   :license {:name "MIT License"
             :url "https://opensource.org/licenses/MIT"}
