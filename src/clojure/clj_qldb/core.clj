@@ -3,7 +3,8 @@
             [dandelion.core :as ion])
   (:import (pbalduino.cljqldb.helper Driver)
            (java.util ArrayList
-                      List)
+                      List
+                      Map)
            (software.amazon.qldb ExecutorNoReturn
                                  PooledQldbDriver
                                  QldbSession
