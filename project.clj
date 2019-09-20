@@ -8,7 +8,7 @@
   :deploy-repositories [["clojars" {:url "https://repo.clojars.org"}
                         ["releases" :clojars]
                         ["snapshots" :clojars]]]
-  :dependencies [[pbalduino/dandelion "0.1.1"]
+  :dependencies [[pbalduino/dandelion "0.1.2"]
                  [software.amazon.qldb/amazon-qldb-driver-java "1.0.1"]]
   :source-paths ["src/clojure"]
   :java-source-paths ["src/java"]
