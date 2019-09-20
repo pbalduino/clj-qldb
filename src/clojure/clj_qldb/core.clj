@@ -1,23 +1,35 @@
 (ns clj-qldb.core
-  (:import (pbalduino.cljqldb.helper Connection)
-           (software.amazon.qldb PooledQldbDriver
-                                 QldbSession)))
+  (:require [clojure.string :as str]
+            [dandelion.core :as ion])
+  (:import (pbalduino.cljqldb.helper Driver)
+           (java.util ArrayList
+                      List)
+           (software.amazon.qldb ExecutorNoReturn
+                                 PooledQldbDriver
+                                 QldbSession
+                                 TransactionExecutor)))
 
 (defn create-driver
   ([^String ledger-name]
-    (create-driver ledger-name 5))
+   (create-driver ledger-name 5))
   ([^String ledger-name ^Integer retries]
-    {:pre [(some? ledger-name)]}
-    (Connection/createQldbDriver ledger-name retries)))
+   {:pre [(some? ledger-name)]}
+   (Driver/createQldbDriver ledger-name retries)))
 
 (defn get-session [^PooledQldbDriver driver]
   (.getSession driver))
 
 (defn create-session
   ([^String ledger-name]
-    (create-session ledger-name 5))
+   (create-session ledger-name 5))
   ([^String ledger-name ^Integer retries]
-    (get-session (Connection/createQldbDriver ledger-name retries))))
+   (get-session (Driver/createQldbDriver ledger-name retries))))
+
+(defn- ->clj-list [ion-list]
+  (map ion/ion->clj
+       (-> ion-list
+           .iterator
+           iterator-seq)))
 
 (defn get-table-names [^QldbSession session]
   (-> session
@@ -25,9 +37,31 @@
       .iterator
       iterator-seq))
 
-(defn create-table [_ _])
+(defn- execute
+  ([^QldbSession session ^String statement]
+   (->clj-list (.execute session statement)))
+  ([^QldbSession session ^String statement ^List data]
+   (->clj-list (.execute session statement data))))
 
-(defn insert [_ _ _])
+(defn create-table [^QldbSession session ^String table]
+  (execute session (format "CREATE TABLE %s" table)))
+
+(defn drop-table [^QldbSession session ^String table]
+  (execute session (format "DROP TABLE %s" table)))
+
+(defn insert [session table data]
+  (let [ion-list (ArrayList.)]
+    (.add ion-list (ion/clj->ion data))
+    (execute session (format "INSERT INTO %s ?" table) ion-list)))
+
+(defn select [session table & opts]
+  (let [{:keys [fields filter]} (merge {:fields nil
+                                        :filter nil}
+                                       (apply hash-map opts))
+        field-str (if fields (str/join "," fields) "*")
+        condition (if filter (str " WHERE " filter) "")
+        query (format "SELECT %s FROM %s%s" field-str table condition)]
+    (execute session query)))
 
 ; delete
 
