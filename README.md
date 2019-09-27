@@ -19,12 +19,12 @@ From [QLDB description](https://aws.amazon.com/qldb/):
 
 ### Lein/Boot
 ```
-[pbalduino/clj-qldb "0.1.2"]
+[pbalduino/clj-qldb "0.1.3"]
 ```
 
 ### deps.edn
 ```
-pbalduino/clj-qldb {:mvn/version "0.1.2"}
+pbalduino/clj-qldb {:mvn/version "0.1.3"}
 ```
 
 ### Sample
