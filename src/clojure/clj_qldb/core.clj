@@ -14,7 +14,6 @@
   ([^String ledger-name]
    (create-driver ledger-name 5))
   ([^String ledger-name ^Integer retries]
-   {:pre [(some? ledger-name)]}
    (Driver/createQldbDriver ledger-name retries)))
 
 (defn get-session [^PooledQldbDriver driver]
